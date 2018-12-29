@@ -45,13 +45,13 @@ def run(block, state):
 				print str(instr)
 				instr.do(state)
 				print state
-			if isinstance(block.endJump, instructions.JumpZ):
+			if block.endJump == instructions.JumpZ:
 				state.assertHandNotEmpty()
 				if state.hand == 0:
 					block = block.conditionalDestination
 				else:
 					block = block.defaultDestination
-			elif isinstance(block.endJump, instructions.JumpNeg):
+			elif block.endJump == instructions.JumpNeg:
 				state.assertHandNotEmpty()
 				if state.hand < 0:
 					block = block.conditionalDestination
@@ -61,8 +61,8 @@ def run(block, state):
 				block = block.defaultDestination
 	except instructions.EmptyInputException:
 		pass
-	if state.expected == state.output:
-		raise WrongOutputException()
+	if state.expected != state.output:
+		raise WrongOutputException("Got %s, want %s" % (state.output, state.expected))
 	return blockUses
 
 if __name__ == '__main__':

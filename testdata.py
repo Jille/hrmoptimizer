@@ -26,6 +26,6 @@ e:
 """
 
 input = [8, 6, 0, 3, -4, 7, 0, 0, 0, 1, -6, 4, 8, -7, 6, 0]
-expected = [13, 6, 0, 0, 6]
+expected = [14, 6, 0, 0, 6]
 tiles = 6
 initializedTiles = {5: 0}
