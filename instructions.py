@@ -76,7 +76,7 @@ class Sub(BaseInstruction):
 		state.assertHandNotEmpty()
 		state.hand -= state.get(self.argument)
 
-class BumpPlus(BaseInstruction):
+class BumpUp(BaseInstruction):
 	change_hand = True
 	argumentType = FloorArgument
 
@@ -84,7 +84,7 @@ class BumpPlus(BaseInstruction):
 		state.hand = state.get(self.argument)+1
 		state.set(self.argument, state.hand)
 
-class BumpMin(BaseInstruction):
+class BumpDn(BaseInstruction):
 	change_hand = True
 	argumentType = FloorArgument
 
@@ -102,8 +102,8 @@ class JumpZ(BaseJumpInstruction):
 	use_hand = True
 	argumentType = LabelArgument
 
-class JumpNeg(BaseJumpInstruction):
+class JumpN(BaseJumpInstruction):
 	use_hand = True
 	argumentType = LabelArgument
 
-all = [Inbox, Outbox, CopyFrom, CopyTo, Add, Sub, BumpPlus, BumpMin, Jump, JumpZ, JumpNeg]
+all = [Inbox, Outbox, CopyFrom, CopyTo, Add, Sub, BumpUp, BumpDn, Jump, JumpZ, JumpN]

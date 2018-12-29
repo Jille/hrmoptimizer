@@ -66,7 +66,7 @@ def run(block, state):
 					block = block.conditionalDestination
 				else:
 					block = block.defaultDestination
-			elif block.endJump == instructions.JumpNeg:
+			elif block.endJump == instructions.JumpN:
 				state.assertHandNotEmpty()
 				if state.hand < 0:
 					block = block.conditionalDestination

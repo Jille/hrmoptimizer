@@ -28,7 +28,7 @@ def blocker(s):
 		if isinstance(instr, instructions.BaseJumpInstruction):
 			current.endJump = type(instr)
 			targetBlock = labelToBlocks[labels[instr.argument]]
-			if isinstance(instr, instructions.JumpZ) or isinstance(instr, instructions.JumpNeg):
+			if isinstance(instr, instructions.JumpZ) or isinstance(instr, instructions.JumpN):
 				current.conditionalDestination = targetBlock
 				if p+1 in labelToBlocks:
 					current.defaultDestination = labelToBlocks[p+1]
