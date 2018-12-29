@@ -7,7 +7,16 @@ import runner
 
 def restring(block, state):
 	blockUses = runner.run(block, state)
-	todo = [x[0] for x in sorted(blockUses.items(), key=lambda x: x[1])]
+	buckets = collections.defaultdict(list)
+	for b, uses in blockUses.items():
+		buckets[uses].append(b)
+	todo = []
+	for _, equalBlocks in sorted(buckets.items(), key=lambda x: x[0]):
+		entries = {b: 0 for b in equalBlocks}
+		for b, num in blockUses.items():
+			if b.defaultDestination in entries:
+				entries[b.defaultDestination] += num
+		todo.extend([x[0] for x in sorted(entries.items(), key=lambda x: x[1])])
 	before = {}
 	after = {}
 	allBlocks = set(blockUses.keys())

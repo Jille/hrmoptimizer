@@ -37,7 +37,16 @@ class State(object):
 
 def run(block, state):
 	state.reset()
-	blockUses = collections.defaultdict(int)
+	blockUses = {}
+	todo = [block]
+	while todo:
+		b = todo.pop()
+		if b in blockUses:
+			continue
+		blockUses[b] = 0
+		todo.append(b.defaultDestination)
+		if b.conditionalDestination is not None:
+			todo.append(b.conditionalDestination)
 	try:
 		while True:
 			blockUses[block] += 1
