@@ -5,7 +5,7 @@ import parser
 import blocks
 import runner
 
-def restring(block, state):
+def restring(block, tileLabels, state):
 	blockUses = runner.run(block, state)
 	buckets = collections.defaultdict(list)
 	for b, uses in blockUses.items():
@@ -75,8 +75,12 @@ def restring(block, state):
 			program.append("\t%s %s" % (b.endJump.keyword(), blockLabels[b.conditionalDestination]))
 		if b in explicitJumps:
 			program.append("\tJUMP " + blockLabels[b.defaultDestination])
+	for tl, label in tileLabels.items():
+		program.append('DEFINE LABEL %d' % tl)
+		program.append(label)
 	return '\n'.join(program)
 
 if __name__ == '__main__':
 	import loader
-	print restring(blocks.blocker(loader.loadProgram()), runner.State.fromLevel(21))
+	start, tileLabels = blocks.blocker(loader.loadProgram())
+	print restring(start, tileLabels, runner.State.fromLevel(loader.pickLevel()))

@@ -82,4 +82,5 @@ def run(block, state):
 
 if __name__ == '__main__':
 	import loader
-	print run(blocks.blocker(loader.loadProgram()), State.fromLevel(21))
+	start, tileLabels = blocks.blocker(loader.loadProgram())
+	print run(start, State.fromLevel(loader.pickLevel()))
