@@ -32,5 +32,5 @@ def parse(s):
 	return [program, labels]
 
 if __name__ == '__main__':
-	import testdata
-	print parse(testdata.program)
+	import loader
+	print parse(loader.loadProgram())

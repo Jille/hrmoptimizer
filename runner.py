@@ -3,6 +3,7 @@ import collections
 import instructions
 import parser
 import blocks
+import levelloader
 
 class ExecutionException(Exception):
 	pass
@@ -21,6 +22,11 @@ class State(object):
 			self.tiles.update(initializedTiles)
 		_reset()
 		self.reset = _reset
+
+	@classmethod
+	def fromLevel(cls, level, example=0):
+		l = levelloader.levels[level]
+		return cls(l.examples[example][0], l.examples[example][1], l.tiles, l.initializedTiles)
 
 	def get(self, argument):
 		return self.tiles[argument]
@@ -75,5 +81,5 @@ def run(block, state):
 	return blockUses
 
 if __name__ == '__main__':
-	import testdata
-	print run(blocks.blocker(testdata.program), State(testdata.input, testdata.expected, testdata.tiles, testdata.initializedTiles))
+	import loader
+	print run(blocks.blocker(loader.loadProgram()), State.fromLevel(21))

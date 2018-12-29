@@ -51,8 +51,8 @@ def printBlock(b):
 	print "---> JUMP %s" % b.defaultDestination.blockId
 
 if __name__ == '__main__':
-	import testdata
-	todo = [blocker(testdata.program)]
+	import loader
+	todo = [blocker(loader.loadProgram())]
 	seen = set()
 	while todo:
 		b = todo.pop()

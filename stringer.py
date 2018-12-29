@@ -78,5 +78,5 @@ def restring(block, state):
 	return '\n'.join(program)
 
 if __name__ == '__main__':
-	import testdata
-	print restring(blocks.blocker(testdata.program), runner.State(testdata.input, testdata.expected, testdata.tiles, testdata.initializedTiles))
+	import loader
+	print restring(blocks.blocker(loader.loadProgram()), runner.State.fromLevel(21))

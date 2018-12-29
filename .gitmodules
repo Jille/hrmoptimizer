@@ -1,0 +1,3 @@
+[submodule "hrm-level-data"]
+	path = hrm-level-data
+	url = https://github.com/atesgoral/hrm-level-data.git
