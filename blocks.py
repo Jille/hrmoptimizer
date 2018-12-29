@@ -21,7 +21,8 @@ def blocker(s):
 	print labelToBlocks
 	for p, instr in enumerate(program):
 		print "At %d: %s" % (p, instr)
-		if p in labelToBlocks:
+		if p in labelToBlocks and labelToBlocks[p] != current:
+			assert current.defaultDestination is None
 			current.defaultDestination = labelToBlocks[p]
 			current = current.defaultDestination
 		if isinstance(instr, instructions.BaseJumpInstruction):
@@ -29,11 +30,14 @@ def blocker(s):
 			targetBlock = labelToBlocks[labels[instr.argument]]
 			if isinstance(instr, instructions.JumpZ) or isinstance(instr, instructions.JumpNeg):
 				current.conditionalDestination = targetBlock
-				if p+1 not in labelToBlocks:
+				if p+1 in labelToBlocks:
+					current.defaultDestination = labelToBlocks[p+1]
+				else:
 					current.defaultDestination = Block()
+				current = current.defaultDestination
 			else:
 				current.defaultDestination = targetBlock
-			current = current.defaultDestination
+				current = Block()  # empty block that'll be garbage collected
 		else:
 			current.instructions.append(instr)
 	return start
@@ -49,12 +53,13 @@ def printBlock(b):
 if __name__ == '__main__':
 	import testdata
 	todo = [blocker(testdata.program)]
-	seen = {None}
+	seen = set()
 	while todo:
 		b = todo.pop()
 		if b in seen:
 			continue
 		seen.add(b)
 		todo.append(b.defaultDestination)
-		todo.append(b.conditionalDestination)
+		if b.conditionalDestination is not None:
+			todo.append(b.conditionalDestination)
 		printBlock(b)
