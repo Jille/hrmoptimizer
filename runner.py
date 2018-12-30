@@ -18,8 +18,9 @@ class State(object):
 			self.output = []
 			self.expected = list(expected)
 			self.hand = None
-			self.tiles = {i: None for i in range(tiles)}
-			self.tiles.update(initializedTiles)
+			self.tiles = [None for i in range(tiles)]
+			for k, v in initializedTiles.items():
+				self.tiles[k] = v
 		_reset()
 		self.reset = _reset
 
