@@ -43,16 +43,7 @@ class State(object):
 
 def run(block, state):
 	state.reset()
-	blockUses = {}
-	todo = [block]
-	while todo:
-		b = todo.pop()
-		if b in blockUses:
-			continue
-		blockUses[b] = 0
-		todo.append(b.defaultDestination)
-		if b.conditionalDestination is not None:
-			todo.append(b.conditionalDestination)
+	blockUses = {b: 0 for b in blocks.allBlocks(block)}
 	try:
 		while True:
 			blockUses[block] += 1

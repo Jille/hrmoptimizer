@@ -42,6 +42,19 @@ def blocker(s):
 			current.instructions.append(instr)
 	return start, tileLabels
 
+def allBlocks(start):
+	ret = set()
+	todo = [start]
+	while todo:
+		b = todo.pop()
+		if b in ret:
+			continue
+		ret.add(b)
+		todo.append(b.defaultDestination)
+		if b.conditionalDestination is not None:
+			todo.append(b.conditionalDestination)
+	return ret
+
 def printBlock(b):
 	print "==> Block %d" % b.blockId
 	for instr in b.instructions:
