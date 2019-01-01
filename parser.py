@@ -37,7 +37,8 @@ def parse(s):
 			if instr.argumentType:
 				arg = sp[1]
 				if instr.argumentType == instructions.FloorArgument:
-					arg = int(arg)
+					if not (arg.startswith('[') and arg.endswith(']')):
+						arg = int(arg)
 			program.append(instr(arg))
 	return [program, labels, tileLabels]
 

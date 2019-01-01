@@ -29,11 +29,18 @@ class State(object):
 		l = levelloader.levels[level]
 		return cls(l.examples[example][0], l.examples[example][1], l.tiles, l.initializedTiles)
 
+	def _deref(self, argument):
+		"""Dereference argument if needed. Turns [0] into the value of tile 0."""
+		if isinstance(argument, int):
+			return argument
+		assert argument.startswith('[') and argument.endswith(']')
+		return self.tiles[int(argument[1:-1])]
+
 	def get(self, argument):
-		return self.tiles[argument]
+		return self.tiles[self._deref(argument)]
 
 	def set(self, argument, value):
-		self.tiles[argument] = value
+		self.tiles[self._deref(argument)] = value
 
 	def assertHandNotEmpty(self):
 		if self.hand is None:
