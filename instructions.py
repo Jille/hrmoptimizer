@@ -66,6 +66,8 @@ class Add(BaseInstruction):
 
 	def do(self, state):
 		state.assertHandNotEmpty()
+		assert isinstance(state.hand, int)
+		assert isinstance(state.get(self.argument), int)
 		state.hand += state.get(self.argument)
 
 class Sub(BaseInstruction):
@@ -75,7 +77,12 @@ class Sub(BaseInstruction):
 
 	def do(self, state):
 		state.assertHandNotEmpty()
-		state.hand -= state.get(self.argument)
+		if isinstance(state.hand, int):
+			assert isinstance(state.get(self.argument), int)
+			state.hand -= state.get(self.argument)
+		else:
+			assert isinstance(state.get(self.argument), basestring)
+			state.hand = ord(state.hand) - ord(state.get(self.argument))
 
 class BumpUp(BaseInstruction):
 	change_hand = True
