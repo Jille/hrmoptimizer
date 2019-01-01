@@ -42,6 +42,7 @@ class Outbox(BaseInstruction):
 	def do(self, state):
 		state.assertHandNotEmpty()
 		state.output.append(state.hand)
+		state.hand = None
 
 class CopyFrom(BaseInstruction):
 	change_hand = True
