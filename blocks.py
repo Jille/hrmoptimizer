@@ -14,7 +14,7 @@ class Block(object):
 		self.defaultDestination = None
 
 def blocker(s):
-	program, labels, tileLabels = parser.parse(s)
+	program, labels, metadata = parser.parse(s)
 	start = Block()
 	current = start
 	labelToBlocks = {idx: Block() for idx in set(labels.values())}
@@ -40,7 +40,7 @@ def blocker(s):
 				current = Block()  # empty block that'll be garbage collected
 		else:
 			current.instructions.append(instr)
-	return start, tileLabels
+	return start, metadata
 
 def allBlocks(start):
 	ret = set()
@@ -65,7 +65,7 @@ def printBlock(b):
 
 if __name__ == '__main__':
 	import loader
-	start, tileLabels = blocker(loader.loadProgram())
+	start, metadata = blocker(loader.loadProgram())
 	todo = [start]
 	seen = set()
 	while todo:

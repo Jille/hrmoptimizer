@@ -10,6 +10,9 @@ class LabelArgument(BaseArgument):
 class FloorArgument(BaseArgument):
 	pass
 
+class CommentArgument(BaseArgument):
+	pass
+
 class BaseInstruction(object):
 	use_hand = False
 	change_hand = False
@@ -114,4 +117,10 @@ class JumpN(BaseJumpInstruction):
 	use_hand = True
 	argumentType = LabelArgument
 
-all = [Inbox, Outbox, CopyFrom, CopyTo, Add, Sub, BumpUp, BumpDn, Jump, JumpZ, JumpN]
+class Comment(BaseInstruction):
+	argumentType = CommentArgument
+
+	def do(self, state):
+		pass
+
+all = [Inbox, Outbox, CopyFrom, CopyTo, Add, Sub, BumpUp, BumpDn, Jump, JumpZ, JumpN, Comment]
