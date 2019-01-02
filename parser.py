@@ -21,7 +21,7 @@ def parse(s):
 	comments = collections.defaultdict(str)
 	eatLabel = None
 	eatComment = None
-	for line in lines[1:]:
+	for line in lines:
 		line = line.strip()
 		if not line:
 			continue
@@ -40,6 +40,8 @@ def parse(s):
 			eatLabel = int(line[len('DEFINE LABEL '):])
 		elif line.startswith('DEFINE COMMENT '):
 			eatComment = int(line[len('DEFINE COMMENT '):])
+		elif line.startswith('--'):
+			pass
 		else:
 			sp = line.split()
 			instr = instr_map[sp[0]]
