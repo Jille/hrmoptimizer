@@ -2,6 +2,7 @@ import collections
 
 import instructions
 import parser
+import pprint
 import blocks
 import levelloader
 
@@ -82,4 +83,9 @@ def run(block, state):
 if __name__ == '__main__':
 	import loader
 	start, metadata = blocks.blocker(loader.loadProgram())
-	print run(start, State.fromLevel(loader.pickLevel()))
+	blockUses = run(start, State.fromLevel(loader.pickLevel()))
+	perf = list(sorted([ (block, uses, uses * block.instructionCount())
+		for block, uses in blockUses.iteritems()],
+		key=lambda x: x[2]))
+	pprint.pprint(perf)
+	print(sum(x[2] for x in perf))
