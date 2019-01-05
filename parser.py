@@ -22,6 +22,8 @@ def parse(s):
 	eatLabel = None
 	eatComment = None
 	for line in lines:
+		if '--' in line:
+			line = line.split('--', 1)[0]
 		line = line.strip()
 		if not line:
 			continue
