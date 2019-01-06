@@ -22,6 +22,8 @@ def parse(s):
 	eatLabel = None
 	eatComment = None
 	for line in lines:
+		if '--' in line:
+			line = line.split('--', 1)[0]
 		line = line.strip()
 		if not line:
 			continue
@@ -40,8 +42,6 @@ def parse(s):
 			eatLabel = int(line[len('DEFINE LABEL '):])
 		elif line.startswith('DEFINE COMMENT '):
 			eatComment = int(line[len('DEFINE COMMENT '):])
-		elif line.startswith('--'):
-			pass
 		else:
 			sp = line.split()
 			instr = instr_map[sp[0]]
